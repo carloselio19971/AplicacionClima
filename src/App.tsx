@@ -1,11 +1,14 @@
 import styles from './App.module.css';
+import { Alert } from './Components/Alert/Alert';
 import { Form } from './Components/Form/Form';
 import useWeather from './Components/Hooks/useWeather';
+import { Spinner } from './Components/Spinner/Spinner';
+import { WeatherDetail } from './Components/WeatherDetails/WeatherDetail';
 
 
 function App() {
- 
-        const {fetchWeather} = useWeather();
+        
+        const {weather,  loading, notFound, fetchWeather, hasWeatherData} = useWeather();
 
         console.log(import.meta.env);
   return (
@@ -15,7 +18,13 @@ function App() {
       <Form
         fetchWeather={fetchWeather}
       />
-      <p>2</p>
+        {loading && <Spinner/>}
+        {hasWeatherData && 
+            <WeatherDetail
+            weather={weather} />
+        }
+        {notFound && <Alert>Cuidad no Econtrada</Alert>}
+        
     </div>
     </>
   )
